@@ -16,7 +16,7 @@ var createStreamFromConsumer = function (kafkaConsumer) {
   });
 };
 
-export class KafkaAdapter {
+var KafkaAdapter = class KafkaAdapter {
   constructor(zookeeperAddress) {
     this.zookeeperAddress = zookeeperAddress;
   }
@@ -173,3 +173,7 @@ export class KafkaAdapter {
     });
   }
 };
+
+module.exports = {
+  KafkaAdapter
+}
