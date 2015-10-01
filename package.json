@@ -20,13 +20,15 @@
     "url": "https://github.com/udacity/node-kafka-adapter/issues"
   },
   "homepage": "https://github.com/udacity/node-kafka-adapter#readme",
-  "devDependencies": {
+  "dependencies": {
     "babel": "^5.8.23",
     "bluebird": "^2.10.2",
-    "chai": "^3.3.0",
     "kafka-node": "^0.2.28",
     "lodash": "^3.10.1",
-    "rx": "^4.0.0",
+    "rx": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
     "sinon": "^1.17.1"
   }
 }
