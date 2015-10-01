@@ -57,7 +57,7 @@ export class KafkaAdapter {
       [{topic: topic}],
       configs || {}
     );
-    return this.createStreamFromConsumer(topicConsumer);
+    return createStreamFromConsumer(topicConsumer);
   }
   
   /**
