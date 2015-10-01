@@ -1,0 +1,11 @@
+node_modules
+
+## Rethink db files
+rethinkdb_data
+
+## VSCode related files
+.vscode
+jsconfig.json
+tsconfig.json
+typings
+tsd.json
