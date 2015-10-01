@@ -1,0 +1,32 @@
+{
+  "name": "node-kafka-adapter",
+  "version": "1.0.0",
+  "description": "adapter for talking to Kafka in Udacity node.js services",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/**/*.spec.js --compilers js:babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/udacity/node-kafka-adapter.git"
+  },
+  "keywords": [
+    "kafka",
+    "udacity"
+  ],
+  "author": "dhruvp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/udacity/node-kafka-adapter/issues"
+  },
+  "homepage": "https://github.com/udacity/node-kafka-adapter#readme",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "bluebird": "^2.10.2",
+    "chai": "^3.3.0",
+    "kafka-node": "^0.2.28",
+    "lodash": "^3.10.1",
+    "rx": "^4.0.0",
+    "sinon": "^1.17.1"
+  }
+}
