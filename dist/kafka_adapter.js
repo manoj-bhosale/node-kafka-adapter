@@ -85,7 +85,7 @@ var KafkaAdapter = (function () {
       var clientId = 'worker-' + Math.floor(Math.random() * 10000);
       var consumerClient = new kafka.Client(this.zookeeperAddress, clientId);
       var topicConsumer = new kafka.HighLevelConsumer(consumerClient, [{ topic: topic }], configs || {});
-      return this.createStreamFromConsumer(topicConsumer);
+      return createStreamFromConsumer(topicConsumer);
     }
 
     /**
