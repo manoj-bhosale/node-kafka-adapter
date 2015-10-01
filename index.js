@@ -1,7 +1,7 @@
 require('babel/register');
 
-import * as kafkaAdapter from './kafka_adapter';
+var kafkaAdapter =  require('./kafka_adapter');
 
-export default {
+module.exports = {
   kafkaAdapter
 }
