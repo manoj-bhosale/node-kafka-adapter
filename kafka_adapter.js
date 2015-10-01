@@ -1,7 +1,7 @@
-import { Promise } from 'bluebird';
-import * as kafka from 'kafka-node';
-import * as _ from 'lodash';
-import { Observable } from 'rx';
+var Promise =  require('bluebird').Promise;
+var kafka = require('kafka-node');
+var _ = require('lodash');
+var Observable = require('rx').Observable;
 
 var producerPromise;
 
