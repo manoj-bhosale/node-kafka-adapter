@@ -1,4 +1,4 @@
-import { KafkaAdapter } from '../kafka_adapter';
+import { KafkaAdapter } from '../src/kafka_adapter';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import * as bluebird from 'bluebird';
@@ -31,6 +31,7 @@ describe('kafka adapter', () => {
     it('handles malformed requests that are missing correlation_id', function () {
       let malformedRequestMissingCorrelationId = {
         body: 'query TestQuery {}',
+        request_id: 'request_id',
         request_topic: 'example_request_topic'
       };
       let response = {data: {}};
@@ -40,10 +41,25 @@ describe('kafka adapter', () => {
       );
       chai.expect(kafkaMessageObject).to.have.property('errors').with.length(1);
     });
-    it('creates an object w/ a response and correlation id', () => {
+    it('handles malformed requests that are missing request_id', function () {
+      let malformedRequestMissingCorrelationId = {
+        body: 'query TestQuery {}',
+        correlation_id: 'correlation_id',
+        request_topic: 'example_request_topic'
+      };
+      let response = {data: {}};
+      let kafkaMessageObject = adapter.createMessageResponseObject(
+        response,
+        malformedRequestMissingCorrelationId
+      );
+      chai.expect(kafkaMessageObject).to.have.property('errors').with.length(1);
+    });
+    it('creates an object w/ a response and request id and correlation id', () => {
       let correlationId = 'test_correlation_id';
+      let requestId = 'test_request_id';
       let validRequest = {
         body: 'query TestQuery {}',
+        request_id: requestId,
         correlation_id: correlationId
       };
       let response = {data: {}};
@@ -53,6 +69,7 @@ describe('kafka adapter', () => {
       );
       chai.expect(kafkaMessageObject).to.deep.equal({
         response: response,
+        request_id: requestId,
         correlation_id: correlationId
       });
     });
@@ -62,6 +79,7 @@ describe('kafka adapter', () => {
     it('errors on malformed requests that lack request_topic', function (done) {
       let malformedRequest = {
         body: 'query TestQuery{}',
+        request_id: 'test_id',
         correlation_id: 'test_id'
       };
       adapter.writeResponseForRequest({}, malformedRequest)
@@ -74,24 +92,32 @@ describe('kafka adapter', () => {
       let validRequest = {
         body: 'query testQuery{}',
         correlation_id: 'test_id',
-        request_topic: 'test_topic'
+        request_id: 'test_id',
+        response_topic: 'test_topic'
       };
       let graphqlResponse = {data: {}};
       let responseKafkaMessage = {
         response: graphqlResponse,
+        request_id: validRequest.request_id,
+        response_topic: validRequest.response_topic,
+        errors: [],
         correlation_id: validRequest.correlation_id
       };
       let kafkaSendResponse = 'kafka message sent';
+
       let writeKafkaMessageToTopicStub = this.stub(adapter, 'writeMessageToTopic');
-      writeKafkaMessageToTopicStub.withArgs(JSON.stringify(responseKafkaMessage), validRequest.request_topic).returns(
+      writeKafkaMessageToTopicStub.withArgs(JSON.stringify(responseKafkaMessage), validRequest.response_topic).returns(
         new bluebird.Promise((resolve, reject) => (resolve(kafkaSendResponse)))
       );
+
       adapter.writeResponseForRequest(graphqlResponse, validRequest)
       .then((message) => {
         chai.expect(message).to.equal(kafkaSendResponse);
-        done();
+				done();
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+      });
     }));
   });
   

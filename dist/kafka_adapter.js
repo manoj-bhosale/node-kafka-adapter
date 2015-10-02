@@ -108,17 +108,18 @@ var KafkaAdapter = (function () {
       };
 
       if (!request.correlation_id) {
-        // return an error response
-        messageResponseObject.errors.concat(['Invalid Request: Request is missing correlation_id. Request is ' + request]);
+        messageResponseObject.errors.push('Invalid Request: Request is missing correlation_id. Request is ' + request);
       } else {
         messageResponseObject.correlation_id = request.correlation_id;
       }
 
       if (!request.request_id) {
-        messageResponseObject.errors.concat(['Invalid Request: Request is missing request_id. Request is ' + request]);
+        messageResponseObject.errors.push('Invalid Request: Request is missing request_id. Request is ' + request);
       } else {
         messageResponseObject.request_id = request.request_id;
       }
+
+      if (messageResponseObject.errors.length === 0) delete messageResponseObject.errors;
 
       return messageResponseObject;
     }
