@@ -49,7 +49,7 @@ export class KafkaAdapter {
   * @param {object} optional config to pass in for the consumer
    *@returns {Observable} 
   */
-  creatMessageStreamForTopic (topic, configs) {
+  createMessageStreamForTopic (topic, configs) {
     var clientId = 'worker-' + Math.floor(Math.random() * 10000);
     var consumerClient = new kafka.Client(this.zookeeperAddress, clientId);
     var topicConsumer = new kafka.HighLevelConsumer(

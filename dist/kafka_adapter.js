@@ -80,8 +80,8 @@ var KafkaAdapter = (function () {
      *@returns {Observable} 
     */
   }, {
-    key: 'creatMessageStreamForTopic',
-    value: function creatMessageStreamForTopic(topic, configs) {
+    key: 'createMessageStreamForTopic',
+    value: function createMessageStreamForTopic(topic, configs) {
       var clientId = 'worker-' + Math.floor(Math.random() * 10000);
       var consumerClient = new kafka.Client(this.zookeeperAddress, clientId);
       var topicConsumer = new kafka.HighLevelConsumer(consumerClient, [{ topic: topic }], configs || {});
