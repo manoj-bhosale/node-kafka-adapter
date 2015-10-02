@@ -103,14 +103,24 @@ var KafkaAdapter = (function () {
     */
     value: function createMessageResponseObject(response, request) {
       var messageResponseObject = {
+        errors: [],
         response: response
       };
+
       if (!request.correlation_id) {
-        // return an error response
-        messageResponseObject.errors = ['Invalid Request: Request is missing correlation_id. Request is ' + request];
+        messageResponseObject.errors.push('Invalid Request: Request is missing correlation_id. Request is ' + request);
       } else {
         messageResponseObject.correlation_id = request.correlation_id;
       }
+
+      if (!request.request_id) {
+        messageResponseObject.errors.push('Invalid Request: Request is missing request_id. Request is ' + request);
+      } else {
+        messageResponseObject.request_id = request.request_id;
+      }
+
+      if (messageResponseObject.errors.length === 0) delete messageResponseObject.errors;
+
       return messageResponseObject;
     }
 
@@ -119,16 +129,16 @@ var KafkaAdapter = (function () {
     * @param {object} response - js object representing json response
     * @param {object: {correlation_id: string, response_topic: string, body: string}} request - js object representing request message on kafka
     * @returns {Promise<string>} Kafka's response to sending the message
-    * @throws {Error} - if the request doesn't have a request_topic, throw an error
+    * @throws {Error} - if the request doesn't have a response_topic, throw an error
     */
   }, {
     key: 'writeResponseForRequest',
     value: function writeResponseForRequest(response, request) {
-      if (!request.request_topic) {
-        return _bluebird.Promise.reject('Request is missing a request_topic. Request: %j');
+      if (!request.response_topic) {
+        return _bluebird.Promise.reject('Request is missing a response_topic. Request: %j');
       } else {
         var kafkaMessageObject = this.createMessageResponseObject(response, request);
-        return this.writeMessageToTopic(JSON.stringify(kafkaMessageObject), request.request_topic);
+        return this.writeMessageToTopic(JSON.stringify(kafkaMessageObject), request.response_topic);
       }
     }
 
