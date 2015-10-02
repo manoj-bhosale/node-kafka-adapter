@@ -144,8 +144,10 @@ var KafkaAdapter = (function () {
     */
   }, {
     key: 'writeMessageToTopic',
-    value: function writeMessageToTopic(messageString, topic, configs) {
+    value: function writeMessageToTopic(messageString, topic) {
       var _this = this;
+
+      var configs = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
       var attemptNumber = configs.attemptNumber || 0;
       var maxAttempts = configs.maxAttempts || 10;

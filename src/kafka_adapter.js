@@ -114,7 +114,7 @@ export class KafkaAdapter {
         withBackoff - boolean - whether or not to use exponential backoff
   * @returns {Promise<String>} response of Kafka to a successful write
   */
-  writeMessageToTopic (messageString, topic, configs) {
+  writeMessageToTopic (messageString, topic, configs = {}) {
     var attemptNumber = configs.attemptNumber || 0;
     var maxAttempts = configs.maxAttempts || 10;
     var withBackoff = configs.withBackoff !== undefined ? configs.withBackoff : true;
