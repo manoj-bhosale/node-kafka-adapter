@@ -1,4 +1,4 @@
-import { KafkaAdapter } from '../kafka_adapter';
+import { KafkaAdapter } from '../src';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import * as bluebird from 'bluebird';
