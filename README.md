@@ -48,6 +48,20 @@ responseStream.subscribe(
 );
 ```
 
+### Respond to a request
+```javascript
+var request = {
+  request_id: '1234',
+  correlation_id: '5678',
+  request_topic: 'request_server.node.1'
+  body: ''
+}
+var response = {...}
+kafkaAdapter.writeResponseForRequest(response, request)
+  .then((message) => console.log('Kafka responded with: ', message);)
+  .catch((error) => console.error('Could not write a response. Request: %j, Response %j', request, response));
+
+
 ### Write a message to a topic
 ```javascript
 kafkaAdapter.writeMessageToTopic(JSON.stringify(myMessageObj), 'topic_name')
