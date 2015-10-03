@@ -60,7 +60,7 @@ var response = {...}
 kafkaAdapter.writeResponseForRequest(response, request)
   .then((message) => console.log('Kafka responded with: ', message);)
   .catch((error) => console.error('Could not write a response. Request: %j, Response %j', request, response));
-
+```
 
 ### Write a message to a topic
 ```javascript
