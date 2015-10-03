@@ -1,6 +1,4 @@
-[![Coverage Status][CS img]][Coverage Status]
-[Coverage Status]: https://coveralls.io/r/udacity/node-kafka-adapter
-[CS img]: https://coveralls.io/repos/udacity/node-kafka-adapter/badge.png?branch=master
+[![Coverage Status](https://coveralls.io/repos/udacity/node-kafka-adapter/badge.svg?branch=master&service=github&t=4uxnKr)](https://coveralls.io/github/udacity/node-kafka-adapter?branch=master)
 
 # node-kafka-adapter
 Adapter to use Kafka for Udacity Services
