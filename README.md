@@ -1,3 +1,7 @@
+[![Coverage Status][CS img]][Coverage Status]
+[Coverage Status]: https://coveralls.io/r/udacity/<YOUR REPO NAME HERE>
+[CS img]: https://coveralls.io/repos/udacity/<YOUR REPO NAME HERE>/badge.png?branch=master
+
 # node-kafka-adapter
 Adapter to use Kafka for Udacity Services
 

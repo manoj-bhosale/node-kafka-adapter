@@ -88,7 +88,7 @@ describe('kafka adapter', () => {
         done();
       });
     });
-    it('calls writeKafkaMessageToTopic with a valid kafka message object on valid requests', sinon.test(function (done) {
+    it('calls writeMessageToTopic with a valid kafka message object on valid requests', sinon.test(function (done) {
       let validRequest = {
         body: 'query testQuery{}',
         correlation_id: 'test_id',
@@ -98,15 +98,13 @@ describe('kafka adapter', () => {
       let graphqlResponse = {data: {}};
       let responseKafkaMessage = {
         response: graphqlResponse,
-        request_id: validRequest.request_id,
-        response_topic: validRequest.response_topic,
-        errors: [],
-        correlation_id: validRequest.correlation_id
+        correlation_id: validRequest.correlation_id,
+        request_id: validRequest.request_id
       };
       let kafkaSendResponse = 'kafka message sent';
 
-      let writeKafkaMessageToTopicStub = this.stub(adapter, 'writeMessageToTopic');
-      writeKafkaMessageToTopicStub.withArgs(JSON.stringify(responseKafkaMessage), validRequest.response_topic).returns(
+      let writeMessageToTopicStub = this.stub(adapter, 'writeMessageToTopic');
+      writeMessageToTopicStub.withArgs(JSON.stringify(responseKafkaMessage), validRequest.response_topic).returns(
         new bluebird.Promise((resolve, reject) => (resolve(kafkaSendResponse)))
       );
 
